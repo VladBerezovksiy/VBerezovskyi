@@ -1,7 +1,4 @@
-const {
-  setHeadlessWhen,
-  setCommonPlugins
-} = require("@codeceptjs/configure");
+const { setHeadlessWhen, setCommonPlugins } = require("@codeceptjs/configure");
 // turn on headless mode when running with HEADLESS=true environment variable
 // export HEADLESS=true && npx codeceptjs run
 setHeadlessWhen(process.env.HEADLESS);
@@ -22,11 +19,9 @@ exports.config = {
     },
   },
   include: {
-    "I": "./steps_file.js",
-    "homePage": "./pages/home.js",
-    "productPage": "./pages/product.js",
-    "createAccountsPage": "./pages/createAccounts.js",
-    "authPage": "./pages/auth.js"
+    I: "./steps_file.js",
+    homePage: "./pages/home.js",
+    registerPage: "./pages/register.js",
   },
   name: "VBerezovskyi",
 };

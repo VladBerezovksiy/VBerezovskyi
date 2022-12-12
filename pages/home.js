@@ -1,9 +1,11 @@
 const { I } = inject();
 
 module.exports = {
-  signInButton: { css: "div.header_user_info" },
+  myAccountSpoiler: { xpath: '//*[@id="top-links"]/ul/li/span/span' },
+  registerLink: { xpath: '//a[.="Register"]' },
 
-  clickSignIn() {
-    I.click(this.signInButton);
-  },
-};
+  openRegistrationPage() {
+    I.click(this.myAccountSpoiler);
+    I.click(this.registerLink);
+  }
+}
