@@ -23,8 +23,10 @@ module.exports = {
   fillRegisxtrationDetails(user) {
     I.fillField(this.firstNameField, user.firstName);
     I.fillField(this.lastNameField, user.lastName);
+    console.log("Email:" + user.email);
     I.fillField(this.emailField, user.email);
     I.fillField(this.phoneField, user.phone);
+    console.log("Password:" + user.password);
     I.fillField(this.pswField, user.password);
     I.fillField(this.rePswField, user.password);
     I.click(this.privacyPolicyButton);

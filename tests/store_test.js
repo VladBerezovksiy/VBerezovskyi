@@ -8,10 +8,10 @@ let registrationUser = {
 
 Feature("store");
 
-Scenario("test something", ({ I, homePage, registerPage }) => {
+Scenario("Registration", ({ I, homePage, registerPage }) => {
   I.openStore();
   homePage.openRegistrationPage();
   registerPage.verifyRegisterAccountText();
   registerPage.fillRegisxtrationDetails(registrationUser);
   registerPage.verifyRegisterAccountSuccessText();
-});
+}).tag("reg");

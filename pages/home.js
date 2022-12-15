@@ -7,5 +7,5 @@ module.exports = {
   openRegistrationPage() {
     I.click(this.myAccountSpoiler);
     I.click(this.registerLink);
-  }
-}
+  },
+};
