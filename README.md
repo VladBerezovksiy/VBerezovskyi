@@ -1,4 +1,38 @@
-# VBerezovskyi
+# Website: [Best Friends](http://opencart.qatestlab.net/index.php?route=common/home)
+
+### Codeceptjs command for run
+
+**Command to run all tests:**
+
+```
+npx codeceptjs run
+```
+
+```
+npx codeceptjs run --grep "Name tag"
+```
+
+```
+npx codeceptjs run --steps
+```
+
+**Command to create Page Object:**
+
+```
+npx codeceptjs gpo
+```
+
+**Command to create main config file => codecept.conf.js:**
+
+```
+npx codeceptjs init
+```
+
+**Command to update all files:**
+
+```
+npx codeceptjs def
+```
 
 ### Task 01 => Done
 
