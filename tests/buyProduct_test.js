@@ -1,12 +1,3 @@
-const { totalPriceText } = require("../pages/checkout");
-const { checkoutButton } = require("../pages/product");
-
-const PRODUCT_URL =
-  "http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=40";
-
-const ORDER_HISTORY_URL =
-  "http://opencart.qatestlab.net/index.php?route=account/order";
-
 let loginUser = {
   email: "1671089355797@gmail.com",
   password: "Qwerty123456",
@@ -29,7 +20,7 @@ Scenario(
   "Buy product",
   async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
     I.login(loginUser);
-    I.amOnPage(PRODUCT_URL);
+    I.openProductPage();
 
     let price = await productPage.getProductPrice();
     console.log("Product price: " + price);
@@ -40,22 +31,29 @@ Scenario(
     console.log("Color Price: " + colorPrice);
 
     productPage.addProductToCheckout();
-    checkoutPage.steps(checkoutData);
+    checkoutPage.completeStepsFrom1to5(checkoutData);
 
-    let deliveryPrice = await checkoutPage.getProductDelivery();
+    let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
     console.log("Delivery price: " + deliveryPrice);
 
     let totalPrice = await checkoutPage.getProductTotalPrice();
-    console.log("Toatal price: " + totalPrice);
+    console.log("Total price: " + totalPrice);
 
     checkoutPage.finishSteps();
 
-    let summary =
+    let calculatedTotalPrice =
       parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
-    I.assertEqual(summary, parseFloat(totalPrice), "Don't match prices!");
 
-    I.amOnPage(ORDER_HISTORY_URL);
-    let idLastOrder = await orderHistoryPage.grapLastOrder(summary);
+    I.assertEqual(
+      calculatedTotalPrice,
+      parseFloat(totalPrice),
+      "Don't match prices!"
+    );
+
+    I.openOrderHistoryPage();
+    let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
+      calculatedTotalPrice
+    );
     console.log("Order ID: " + idLastOrder);
   }
 ).tag("buy");

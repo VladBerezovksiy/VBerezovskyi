@@ -12,6 +12,6 @@ Scenario("Registration", ({ I, homePage, registerPage }) => {
   I.openStore();
   homePage.openRegistrationPage();
   registerPage.verifyRegisterAccountText();
-  registerPage.fillRegisxtrationDetails(registrationUser);
+  registerPage.fillRegistrationDetails(registrationUser);
   registerPage.verifyRegisterAccountSuccessText();
 }).tag("reg");

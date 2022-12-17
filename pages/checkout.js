@@ -1,5 +1,3 @@
-const { continueButton } = require("./register");
-
 const { I } = inject();
 
 module.exports = {
@@ -25,10 +23,14 @@ module.exports = {
 
   checkoutSuccess: { xpath: '//*[@id="content"]/p[1]' },
 
-  steps(checkoutData) {
+  generateAndClickContinueButtonFrom1to5(nameStep) {
     I.click({
-      xpath: `//a[contains(., 'Step 2')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input`,
+      xpath: `//a[contains(., '${nameStep}')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[contains(@id, 'button')]`,
     });
+  },
+
+  completeStepsFrom1to5(checkoutData) {
+    this.generateAndClickContinueButtonFrom1to5("Step 2");
     I.waitForElement(this.changeAddressRadiButton);
     I.click(this.changeAddressRadiButton);
     I.waitForElement(this.firstNameField);
@@ -36,35 +38,29 @@ module.exports = {
     I.fillField(this.lastNameField, checkoutData.lastName);
     I.fillField(this.firstAddressField, checkoutData.firstAddress);
     I.fillField(this.cityField, checkoutData.city);
-    I.click({
-      xpath: `//a[contains(., 'Step 3')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[@type='button']`,
-    });
-    I.click({
-      xpath: `//a[contains(., 'Step 4')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[@type='button']`,
-    });
+    this.generateAndClickContinueButtonFrom1to5("Step 3");
+    this.generateAndClickContinueButtonFrom1to5("Step 4");
     I.waitForElement(this.conditionsCheckbox, 5);
     I.click(this.conditionsCheckbox);
-    I.click({
-      xpath: `//a[contains(., 'Step 5')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[@type='button']`,
-    });
+    this.generateAndClickContinueButtonFrom1to5("Step 5");
   },
 
   finishSteps() {
-    I.click({
-      xpath: `//a[contains(., 'Step 6')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[@type='button']`,
-    });
+    this.generateAndClickContinueButtonFrom1to5("Step 6");
     I.waitForElement(this.checkoutSuccess, 3);
   },
 
-  async getProductDelivery() {
-    return await (
-      await I.grabTextFrom(this.deliveryPriceText)
-    ).replace(/[^0-9\.]+/g, "");
+  async getProductDeliveryPrice() {
+    return (await I.grabTextFrom(this.deliveryPriceText)).replace(
+      /[^0-9\.]+/g,
+      ""
+    );
   },
 
   async getProductTotalPrice() {
-    return await (
-      await I.grabTextFrom(this.totalPriceText)
-    ).replace(/[^0-9\.]+/g, "");
+    return (await I.grabTextFrom(this.totalPriceText)).replace(
+      /[^0-9\.]+/g,
+      ""
+    );
   },
 };

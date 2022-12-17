@@ -20,7 +20,7 @@ module.exports = {
     I.see(this.registerHeaderText);
   },
 
-  fillRegisxtrationDetails(user) {
+  fillRegistrationDetails(user) {
     I.fillField(this.firstNameField, user.firstName);
     I.fillField(this.lastNameField, user.lastName);
     console.log("Email:" + user.email);

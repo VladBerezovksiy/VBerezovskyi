@@ -8,15 +8,14 @@ module.exports = {
   checkoutButton: { xpath: "//div[@id='cart']//a[contains(.,'Checkout')]" },
 
   async getProductPrice() {
-    return await (
-      await I.grabTextFrom(this.priceText)
-    ).replace(/[^0-9\.]+/g, "");
+    return (await I.grabTextFrom(this.priceText)).replace(/[^0-9\.]+/g, "");
   },
 
   async getColorProductPrice() {
-    return await (
-      await I.grabTextFrom(this.dropdownElement)
-    ).replace(/[^0-9\.]+/g, "");
+    return (await I.grabTextFrom(this.dropdownElement)).replace(
+      /[^0-9\.]+/g,
+      ""
+    );
   },
 
   selectColorProduct(options) {
