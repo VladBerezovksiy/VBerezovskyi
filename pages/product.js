@@ -18,8 +18,8 @@ module.exports = {
     );
   },
 
-  selectColorProduct(options) {
-    let colorText = `//ul[contains(@id, "sbOptions")]//a[contains(.,"${options.color}")]`;
+  selectColorProduct(color) {
+    let colorText = `//ul[contains(@id, "sbOptions")]//a[contains(.,"${color}")]`;
     I.click(this.dropdownElement);
     I.waitForElement(colorText, 3);
     I.click(colorText);

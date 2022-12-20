@@ -15,7 +15,6 @@ exports.config = {
       url: "http://localhost",
       show: true,
       browser: "chromium",
-      waitForNavigation: "networkidle",
       waitForTimeout: 5000,
     },
 
