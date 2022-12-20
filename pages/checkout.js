@@ -1,6 +1,9 @@
 const { I } = inject();
 
 module.exports = {
+  //***********************       ELEMENTS       ************************//
+  //***********************       STEP 3       ************************//
+
   changeAddressRadiButton: {
     xpath: `//div[@id='shipping-existing']//ancestor::form//label[contains(.,'I want to use a new address')]`,
   },
@@ -12,7 +15,11 @@ module.exports = {
   countryField: { css: "#input-shipping-firstname" },
   regionField: { css: "#input-shipping-firstname" },
 
+  //***********************       STEP 5       ************************//
+
   conditionsCheckbox: { xpath: "//input[@id='agree1']" },
+
+  //***********************       STEP 6       ************************//
 
   deliveryPriceText: {
     xpath: "//strong[text()='Flat Shipping Rate:']/ancestor::tr/td[2]",
@@ -21,7 +28,11 @@ module.exports = {
     xpath: "//strong[text()='Total:']/ancestor::tr/td[2]",
   },
 
+  //***********************       FINISHED STEPS       ************************//
+
   checkoutSuccess: { xpath: '//*[@id="content"]/p[1]' },
+
+  //***************************************************************************//
 
   generateAndClickContinueButtonFrom1to5(nameStep) {
     I.click({
@@ -30,7 +41,12 @@ module.exports = {
   },
 
   completeStepsFrom1to5(checkoutData) {
+    //***********************       STEP 1-2       ************************//
+
     this.generateAndClickContinueButtonFrom1to5("Step 2");
+
+    //***********************       STEP 3       ************************//
+
     I.waitForElement(this.changeAddressRadiButton);
     I.click(this.changeAddressRadiButton);
     I.waitForElement(this.firstNameField);
@@ -39,13 +55,21 @@ module.exports = {
     I.fillField(this.firstAddressField, checkoutData.firstAddress);
     I.fillField(this.cityField, checkoutData.city);
     this.generateAndClickContinueButtonFrom1to5("Step 3");
+
+    //***********************       STEP 4       ************************//
+
     this.generateAndClickContinueButtonFrom1to5("Step 4");
+
+    //***********************       STEP 5       ************************//
+
     I.waitForElement(this.conditionsCheckbox, 5);
     I.click(this.conditionsCheckbox);
     this.generateAndClickContinueButtonFrom1to5("Step 5");
   },
 
   finishSteps() {
+    //***********************       STEP 6       ************************//
+
     this.generateAndClickContinueButtonFrom1to5("Step 6");
     I.waitForElement(this.checkoutSuccess, 3);
   },

@@ -1,10 +1,15 @@
 const fs = require("fs");
 const FILE_PATH = "./input/links.txt";
+const JSON_FILE = "./input/productOptions.json";
 
 module.exports = {
-  readContectFromFile() {
+  getProductsFromJson() {
+    return JSON.parse(this.readContectFromFile(JSON_FILE));
+  },
+
+  readContectFromFile(path) {
     try {
-      return fs.readFileSync(FILE_PATH, "utf8");
+      return fs.readFileSync(path, "utf8");
     } catch (err) {
       console.error(err);
     }
@@ -24,7 +29,7 @@ module.exports = {
 
   getLinks() {
     return this.getArrayOfProductLinkObjects(
-      this.getArrayFromString(this.readContectFromFile())
+      this.getArrayFromString(this.readContectFromFile(FILE_PATH))
     );
   },
 };

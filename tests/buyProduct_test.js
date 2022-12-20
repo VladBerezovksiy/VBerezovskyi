@@ -28,10 +28,9 @@ let checkoutData = {
   city: "Odesa",
 };
 
-// const LinksGetter = require("../helpers/productLinksGetter.js");
+const FileReader = require("../helpers/fileReader.js");
 // let productLinks = LinksGetter.getLinks();
-
-const productOptions = JSON.parse("../input/productOptions.json");
+let productOptions = FileReader.getProductsFromJson();
 
 Feature("buy");
 
@@ -39,54 +38,48 @@ Before(({ I }) => {
   I.login(loginUser);
 });
 
-Data(productOptions)
-  .Scenario(
-    "Buy product",
-    async ({ I, productPage, checkoutPage, orderHistoryPage, current }) => {
-      for (let i = 0; i <= 4; i++) {
-        I.amOnPage(current.link[i]);
-        console.log(current.link[i]);
+Scenario(
+  "Buy product",
+  async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
+    for (let i = 0; i < 4; i++) {
+      I.amOnPage(productOptions["link"][i]);
 
-        let price = await productPage.getProductPrice();
-        console.log("Product price: " + price);
+      let price = await productPage.getProductPrice();
+      console.log("Product price: " + price);
 
-        productPage.selectColorProduct(current.color[i]);
-        console.log(current.color[i]);
+      productPage.selectColorProduct(productOptions["color"][i]);
 
-        let colorPrice = await productPage.getColorProductPrice();
-        console.log("Color Price: " + colorPrice);
+      let colorPrice = await productPage.getColorProductPrice();
+      console.log("Color Price: " + colorPrice);
 
-        productPage.addProductToCheckout();
-        checkoutPage.completeStepsFrom1to5(checkoutData);
+      productPage.addProductToCheckout();
+      checkoutPage.completeStepsFrom1to5(checkoutData);
 
-        let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
-        console.log("Delivery price: " + deliveryPrice);
+      let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
+      console.log("Delivery price: " + deliveryPrice);
 
-        let totalPrice = await checkoutPage.getProductTotalPrice();
-        console.log("Total price: " + totalPrice);
+      let totalPrice = await checkoutPage.getProductTotalPrice();
+      console.log("Total price: " + totalPrice);
 
-        checkoutPage.finishSteps();
+      checkoutPage.finishSteps();
 
-        let calculatedTotalPrice =
-          parseFloat(price) +
-          parseFloat(colorPrice) +
-          parseFloat(deliveryPrice);
+      let calculatedTotalPrice =
+        parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
 
-        I.assertEqual(
-          calculatedTotalPrice,
-          parseFloat(totalPrice),
-          "Don't match prices!"
-        );
+      I.assertEqual(
+        calculatedTotalPrice,
+        parseFloat(totalPrice),
+        "Don't match prices!"
+      );
 
-        I.openOrderHistoryPage();
-        let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
-          calculatedTotalPrice
-        );
-        console.log("Order ID: " + idLastOrder + "\n\n");
-      }
+      I.openOrderHistoryPage();
+      let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
+        calculatedTotalPrice
+      );
+      console.log("Order ID: " + idLastOrder + "\n\n");
     }
-  )
-  .tag("buy1");
+  }
+).tag("buy1");
 
 Data(productData)
   .Scenario(
