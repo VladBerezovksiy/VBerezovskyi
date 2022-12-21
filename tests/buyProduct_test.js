@@ -38,7 +38,7 @@ Before(({ I }) => {
 });
 
 Scenario(
-  "Buy product",
+  "Buy product with .json file",
   async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
     for (let i = 0; i < 4; i++) {
       I.amOnPage(productOptions["product"][i]["link"]);
@@ -77,7 +77,7 @@ Scenario(
 
 Data(productData)
   .Scenario(
-    "Buy product",
+    "Buy product with Data Driven Testing",
     async ({ I, productPage, checkoutPage, orderHistoryPage, current }) => {
       I.amOnPage(current.link);
 
