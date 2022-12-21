@@ -29,7 +29,6 @@ let checkoutData = {
 };
 
 const FileReader = require("../helpers/fileReader.js");
-// let productLinks = LinksGetter.getLinks();
 let productOptions = FileReader.getProductsFromJson();
 
 Feature("buy");
@@ -42,12 +41,12 @@ Scenario(
   "Buy product",
   async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
     for (let i = 0; i < 4; i++) {
-      I.amOnPage(productOptions["link"][i]);
+      I.amOnPage(productOptions["product"][i]["link"]);
 
       let price = await productPage.getProductPrice();
       console.log("Product price: " + price);
 
-      productPage.selectColorProduct(productOptions["color"][i]);
+      productPage.selectColorProduct(productOptions["product"][i]["color"]);
 
       let colorPrice = await productPage.getColorProductPrice();
       console.log("Color Price: " + colorPrice);
@@ -63,14 +62,9 @@ Scenario(
 
       checkoutPage.finishSteps();
 
-      let calculatedTotalPrice =
-        parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
+      let calculatedTotalPrice = +price + +colorPrice + +deliveryPrice;
 
-      I.assertEqual(
-        calculatedTotalPrice,
-        parseFloat(totalPrice),
-        "Don't match prices!"
-      );
+      I.assertEqual(calculatedTotalPrice, +totalPrice, "Don't match prices!");
 
       I.openOrderHistoryPage();
       let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
@@ -106,14 +100,9 @@ Data(productData)
 
       checkoutPage.finishSteps();
 
-      let calculatedTotalPrice =
-        parseFloat(price) + parseFloat(colorPrice) + parseFloat(deliveryPrice);
+      let calculatedTotalPrice = +price + +colorPrice + +deliveryPrice;
 
-      I.assertEqual(
-        calculatedTotalPrice,
-        parseFloat(totalPrice),
-        "Don't match prices!"
-      );
+      I.assertEqual(calculatedTotalPrice, +totalPrice, "Don't match prices!");
 
       I.openOrderHistoryPage();
       let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(

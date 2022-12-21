@@ -1,5 +1,4 @@
 const fs = require("fs");
-const FILE_PATH = "./input/links.txt";
 const JSON_FILE = "./input/productOptions.json";
 
 module.exports = {
@@ -19,17 +18,11 @@ module.exports = {
     return string.split("\r\n");
   },
 
-  getArrayOfProductLinkObjects(array) {
+  getArrayOfProductObjects(array) {
     let arrayOfObjects = [];
     for (const element of array) {
       arrayOfObjects.push({ link: element });
     }
     return arrayOfObjects;
-  },
-
-  getLinks() {
-    return this.getArrayOfProductLinkObjects(
-      this.getArrayFromString(this.readContectFromFile(FILE_PATH))
-    );
   },
 };
