@@ -13,16 +13,4 @@ module.exports = {
       console.error(err);
     }
   },
-
-  getArrayFromString(string) {
-    return string.split("\r\n");
-  },
-
-  getArrayOfProductObjects(array) {
-    let arrayOfObjects = [];
-    for (const element of array) {
-      arrayOfObjects.push({ link: element });
-    }
-    return arrayOfObjects;
-  },
 };
