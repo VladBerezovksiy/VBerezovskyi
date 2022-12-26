@@ -21,6 +21,15 @@ exports.config = {
     ChaiWrapper: {
       require: "codeceptjs-chai",
     },
+
+    Converter: {
+      require: "./helpers/converter_helper.js",
+    },
+  },
+  plugins: {
+    tryTo: {
+      enabled: true,
+    },
   },
   include: {
     I: "./steps_file.js",
@@ -29,6 +38,7 @@ exports.config = {
     productPage: "./pages/product.js",
     checkoutPage: "./pages/checkout.js",
     orderHistoryPage: "./pages/orderHistory.js",
+    helper: "./helpers/helper.js",
   },
   name: "VBerezovskyi",
 };

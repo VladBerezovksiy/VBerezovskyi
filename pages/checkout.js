@@ -1,7 +1,14 @@
 const { I } = inject();
+const Helper = require("../helpers/helper.js");
 
 module.exports = {
   //***********************       ELEMENTS       ************************//
+  //***********************       STEP 1       ************************//
+
+  alertNotAvailableProduct: {
+    xpath: `//*[@id="checkout-cart"]/div[contains(.,'Products marked with *** are not available in the desired quantity or not in stock!')]`,
+  },
+
   //***********************       STEP 3       ************************//
 
   changeAddressRadiButton: {
@@ -34,16 +41,20 @@ module.exports = {
 
   //***************************************************************************//
 
-  generateAndClickContinueButtonFrom1to5(nameStep) {
+  _generateAndClickContinueButtonFrom1to5(nameStep) {
     I.click({
       xpath: `//a[contains(., '${nameStep}')]/ancestor::div[@class='panel panel-default']//div[contains(@class, 'buttons')]//input[contains(@id, 'button')]`,
     });
   },
 
+  async checkAlertNotAvailableOfProduct() {
+    return await Helper.checkElementIsVisible(this.alertNotAvailableProduct);
+  },
+
   completeStepsFrom1to5(checkoutData) {
     //***********************       STEP 1-2       ************************//
 
-    this.generateAndClickContinueButtonFrom1to5("Step 2");
+    this._generateAndClickContinueButtonFrom1to5("Step 2");
 
     //***********************       STEP 3       ************************//
 
@@ -54,37 +65,31 @@ module.exports = {
     I.fillField(this.lastNameField, checkoutData.lastName);
     I.fillField(this.firstAddressField, checkoutData.firstAddress);
     I.fillField(this.cityField, checkoutData.city);
-    this.generateAndClickContinueButtonFrom1to5("Step 3");
+    this._generateAndClickContinueButtonFrom1to5("Step 3");
 
     //***********************       STEP 4       ************************//
 
-    this.generateAndClickContinueButtonFrom1to5("Step 4");
+    this._generateAndClickContinueButtonFrom1to5("Step 4");
 
     //***********************       STEP 5       ************************//
 
     I.waitForElement(this.conditionsCheckbox, 5);
     I.click(this.conditionsCheckbox);
-    this.generateAndClickContinueButtonFrom1to5("Step 5");
+    this._generateAndClickContinueButtonFrom1to5("Step 5");
   },
 
   finishSteps() {
     //***********************       STEP 6       ************************//
 
-    this.generateAndClickContinueButtonFrom1to5("Step 6");
+    this._generateAndClickContinueButtonFrom1to5("Step 6");
     I.waitForElement(this.checkoutSuccess, 3);
   },
 
   async getProductDeliveryPrice() {
-    return (await I.grabTextFrom(this.deliveryPriceText)).replace(
-      /[^0-9\.]+/g,
-      ""
-    );
+    return await I.grabTextFrom(this.deliveryPriceText);
   },
 
   async getProductTotalPrice() {
-    return (await I.grabTextFrom(this.totalPriceText)).replace(
-      /[^0-9\.]+/g,
-      ""
-    );
+    return await I.grabTextFrom(this.totalPriceText);
   },
 };

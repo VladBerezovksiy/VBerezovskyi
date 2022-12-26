@@ -9,12 +9,10 @@
       "color": "Gray"
     },
     {
-      "link": "http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=47",
-      "color": "White"
+      "link": "http://opencart.qatestlab.net/index.php?route=product/product&product_id=68"
     },
     {
-      "link": "http://opencart.qatestlab.net/index.php?route=product/product&path=31&product_id=74",
-      "color": "Black"
+      "link": "http://opencart.qatestlab.net/index.php?route=product/product&path=30&product_id=63"
     }
   ]
 }

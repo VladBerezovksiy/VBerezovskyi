@@ -15,8 +15,9 @@ let productOptions = FileReader.getProductsFromJson();
 
 Feature("buy");
 
-Before(({ I }) => {
+Before(async ({ I, homePage }) => {
   I.login(loginUser);
+  await homePage.emptyCart();
 });
 
 Scenario(
@@ -25,34 +26,54 @@ Scenario(
     for (let i = 0; i < 4; i++) {
       I.amOnPage(productOptions["product"][i]["link"]);
 
-      let price = await productPage.getProductPrice();
-      console.log("Product price: " + price);
+      let price = await I.parsePrice(await productPage.getProductPrice());
+      console.log("Product price: $" + price);
 
-      productPage.selectColorProduct(productOptions["product"][i]["color"]);
+      let colorPrice = 0;
 
-      let colorPrice = await productPage.getColorProductPrice();
-      console.log("Color Price: " + colorPrice);
+      if (Boolean(productOptions["product"][i]["color"]) == true) {
+        await productPage.selectColorProduct(
+          productOptions["product"][i]["color"]
+        );
+
+        colorPrice = await productPage.getColorProductPrice();
+        console.log("Color Price: $" + colorPrice);
+      }
 
       productPage.addProductToCheckout();
-      checkoutPage.completeStepsFrom1to5(checkoutData);
 
-      let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
-      console.log("Delivery price: " + deliveryPrice);
+      let buff = await checkoutPage.checkAlertNotAvailableOfProduct();
+      if (Boolean(buff) == false) {
+        checkoutPage.completeStepsFrom1to5(checkoutData);
 
-      let totalPrice = await checkoutPage.getProductTotalPrice();
-      console.log("Total price: " + totalPrice);
+        let deliveryPrice = await I.parsePrice(
+          await checkoutPage.getProductDeliveryPrice()
+        );
+        console.log("Delivery price: $" + deliveryPrice);
 
-      checkoutPage.finishSteps();
+        let totalPrice = await I.parsePrice(
+          await checkoutPage.getProductTotalPrice()
+        );
+        console.log("Total price: $" + totalPrice);
 
-      let calculatedTotalPrice = +price + +colorPrice + +deliveryPrice;
+        checkoutPage.finishSteps();
 
-      I.assertEqual(calculatedTotalPrice, +totalPrice, "Don't match prices!");
+        let calculatedTotalPrice = price + colorPrice + deliveryPrice;
 
-      I.openOrderHistoryPage();
-      let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
-        calculatedTotalPrice
-      );
-      console.log("Order ID: " + idLastOrder + "\n\n");
+        I.assertEqual(calculatedTotalPrice, totalPrice, "Don't match prices!");
+
+        I.openOrderHistoryPage();
+        let idLastOrder = await I.parsePrice(
+          await orderHistoryPage.grabLastOrderIfEqualsPrice(
+            calculatedTotalPrice
+          )
+        );
+        console.log("Order ID: " + idLastOrder + "\n\n");
+      } else {
+        console.log(
+          "Product is not available in the desired quantity or not in stock!\n\n"
+        );
+      }
     }
   }
 ).tag("buy");

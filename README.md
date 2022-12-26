@@ -34,6 +34,12 @@ npx codeceptjs init
 npx codeceptjs def
 ```
 
+**Command to create custom helper:**
+
+```
+npx codeceptjs gh
+```
+
 ### Task 01 => Done
 
 1. Пройти регистрацию нового пользователя и проверить текст успешной регистрации. Начальные шаги доступны в моём репозитории.
@@ -63,3 +69,21 @@ npx codeceptjs def
 5. Методы по чтению/конвертации файла хранить в отдельном объекте в папке helpers.
 6. Переместить логин в конструкцию Before Getting Started | CodeceptJS.
 7. Изменения вносить в git не используя UI, а через терминальные команды(git add <file>, git checkout -b ‘<branch>’, git commit -a -m “<msg>”, git status, git push и т.п.).
+
+### Task 04 => Done
+
+1. Методы объекта страницы, которые не используются в сценарии, а только в самом объекте, переименовать, чтобы начинались с “\_”. Напр. completeStepsFrom2to4() - > \_completeStepsFrom2to4().
+2. Очистить корзину перед покупкой товара используя конструкцию tryTo() Plugins | CodeceptJS. Инструкции поместить в Before().
+3. Получение цены из строки переместить в custom helper Custom Helpers | CodeceptJS
+4. Добавить в список ссылок Parrot toys (qatestlab.net), у которого нет опций. Успешно завершить тест с таким продуктом, используя конструкцию tryTo().
+5. Добавить в список ссылок Aquarium (qatestlab.net), который не доступен к покупке.
+
+### Task 05 =>
+
+1. Вывести в консоль цену покупки в гривнах. Курс гривны получить используя REST API. Get запрос: https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json
+   Установка: API Testing | CodeceptJS
+   Более подробно:
+   REST | CodeceptJS
+   JSONResponse | CodeceptJS
+2. Подключить HTML отчет к тесту. Reporters | CodeceptJS
+3. Заполнить README.md используя шаблон в моём репозитории либо любой другой понравившийся. Файл должен содержать информацию о проекте и инструкции как его установить и запустить. Установка компонентов осуществляется командой npm i.
