@@ -24,7 +24,7 @@ module.exports = {
     let isCartEmpty = await this._checkCartIsEmpty();
     if (isCartEmpty === false) {
       let size = await I.grabAttributeFromAll(this.deleteIconInCart, "class");
-      for (let i = 0; i <= size.length; i++) {
+      for (let i = 0; i < size.length; i++) {
         I.waitForVisible(this.deleteIconInCart, 5);
         I.click(this.deleteIconInCart);
       }
