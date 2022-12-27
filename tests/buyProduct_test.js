@@ -17,7 +17,7 @@ Feature("buy");
 
 Before(async ({ I, homePage }) => {
   I.login(loginUser);
-  await homePage.emptyCart();
+  await homePage.clearCart();
 });
 
 Scenario(
@@ -26,12 +26,12 @@ Scenario(
     for (let i = 0; i < 4; i++) {
       I.amOnPage(productOptions["product"][i]["link"]);
 
-      let price = await I.parsePrice(await productPage.getProductPrice());
+      let price = await productPage.getProductPrice();
       console.log("Product price: $" + price);
 
       let colorPrice = 0;
 
-      if (Boolean(productOptions["product"][i]["color"]) == true) {
+      if (productOptions["product"][i]["color"] !== undefined) {
         await productPage.selectColorProduct(
           productOptions["product"][i]["color"]
         );
@@ -42,18 +42,15 @@ Scenario(
 
       productPage.addProductToCheckout();
 
-      let buff = await checkoutPage.checkAlertNotAvailableOfProduct();
-      if (Boolean(buff) == false) {
+      let isProductAvailable =
+        await checkoutPage.checkAlertNotAvailableOfProduct();
+      if (isProductAvailable === false) {
         checkoutPage.completeStepsFrom1to5(checkoutData);
 
-        let deliveryPrice = await I.parsePrice(
-          await checkoutPage.getProductDeliveryPrice()
-        );
+        let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
         console.log("Delivery price: $" + deliveryPrice);
 
-        let totalPrice = await I.parsePrice(
-          await checkoutPage.getProductTotalPrice()
-        );
+        let totalPrice = await checkoutPage.getProductTotalPrice();
         console.log("Total price: $" + totalPrice);
 
         checkoutPage.finishSteps();
@@ -63,12 +60,10 @@ Scenario(
         I.assertEqual(calculatedTotalPrice, totalPrice, "Don't match prices!");
 
         I.openOrderHistoryPage();
-        let idLastOrder = await I.parsePrice(
-          await orderHistoryPage.grabLastOrderIfEqualsPrice(
-            calculatedTotalPrice
-          )
+        let idLastOrder = await orderHistoryPage.grabLastOrderIfEqualsPrice(
+          calculatedTotalPrice
         );
-        console.log("Order ID: " + idLastOrder + "\n\n");
+        console.log("Order ID: №" + idLastOrder + "\n\n");
       } else {
         console.log(
           "Product is not available in the desired quantity or not in stock!\n\n"

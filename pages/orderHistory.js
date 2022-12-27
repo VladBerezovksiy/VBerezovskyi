@@ -13,7 +13,7 @@ module.exports = {
     console.log("Check last order history price: " + price);
 
     if (price == totalPrice) {
-      return await I.grabTextFrom(this.lastOrderId);
+      return await I.parsePrice(await I.grabTextFrom(this.lastOrderId));
     }
   },
 };

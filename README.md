@@ -1,4 +1,6 @@
-# Website: [Best Friends](http://opencart.qatestlab.net/index.php?route=common/home)
+# Website: [Best Friends (UI testing)](http://opencart.qatestlab.net/index.php?route=common/home)
+
+# Website: [National Bank of Ukraine (API testing)](https://bank.gov.ua/en/)
 
 ### Codeceptjs command for run
 

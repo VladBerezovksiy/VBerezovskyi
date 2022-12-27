@@ -5,29 +5,26 @@ module.exports = {
   myAccountSpoiler: { xpath: '//*[@id="top-links"]/ul/li/span/span' },
   registerLink: { xpath: '//a[.="Register"]' },
   cartButton: { css: "#cart" },
-  emptyCartText: {
-    xpath: `//*[@id='cart']//p[text()="Your shopping cart is empty!"]`,
+  textProductInCart: {
+    css: `#cart ul div.pull-left.name a`,
   },
-  deleteIconInCart: { css: `div#cart button:nth-child(2)` },
 
   openRegistrationPage() {
     I.click(this.myAccountSpoiler);
     I.click(this.registerLink);
   },
 
-  async _checkCartIsEmpty() {
+  async clearCart() {
     I.click(this.cartButton);
-    return await Helper.checkElementIsVisible(this.emptyCartText);
-  },
-
-  async emptyCart() {
-    let isCartEmpty = await this._checkCartIsEmpty();
-    if (isCartEmpty === false) {
-      let size = await I.grabAttributeFromAll(this.deleteIconInCart, "class");
-      for (let i = 0; i < size.length; i++) {
-        I.waitForVisible(this.deleteIconInCart, 5);
-        I.click(this.deleteIconInCart);
-      }
+    let sizeProductsInCart = await I.grabNumberOfVisibleElements(
+      this.textProductInCart
+    );
+    for (let i = 0; i < sizeProductsInCart; i++) {
+      let textProduct = await I.grabTextFrom(this.textProductInCart);
+      let trashIconInCart = `//a[contains(.,'${textProduct}')]/ancestor::li//button[2]`;
+      I.waitForVisible(trashIconInCart, 5);
+      I.click(trashIconInCart);
+      I.waitForInvisible(trashIconInCart, 5);
     }
   },
 };
