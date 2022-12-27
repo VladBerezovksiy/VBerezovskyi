@@ -1,4 +1,5 @@
 const { I } = inject();
+const Helper = require("../helpers/helper.js");
 
 module.exports = {
   priceText: { xpath: '//div[@class="price"]/span' },
@@ -8,21 +9,28 @@ module.exports = {
   checkoutButton: { xpath: "//div[@id='cart']//a[contains(.,'Checkout')]" },
 
   async getProductPrice() {
-    return (await I.grabTextFrom(this.priceText)).replace(/[^0-9\.]+/g, "");
+    return await I.parsePrice(await I.grabTextFrom(this.priceText));
+  },
+
+  async _checkOptionInProduct() {
+    return await Helper.checkElementIsVisible(this.dropdownElement);
   },
 
   async getColorProductPrice() {
-    return (await I.grabTextFrom(this.dropdownElement)).replace(
-      /[^0-9\.]+/g,
-      ""
-    );
+    let colorText = await this._checkOptionInProduct();
+    if (colorText) {
+      return await I.parsePrice(await I.grabTextFrom(this.dropdownElement));
+    }
   },
 
-  selectColorProduct(color) {
-    let colorText = `//ul[contains(@id, "sbOptions")]//a[contains(.,"${color}")]`;
-    I.click(this.dropdownElement);
-    I.waitForElement(colorText, 3);
-    I.click(colorText);
+  async selectColorProduct(color) {
+    let option = await this._checkOptionInProduct();
+    if (option) {
+      let colorText = `//ul[contains(@id, "sbOptions")]//a[contains(.,"${color}")]`;
+      I.click(this.dropdownElement);
+      I.waitForElement(colorText, 3);
+      I.click(colorText);
+    }
   },
 
   addProductToCheckout() {

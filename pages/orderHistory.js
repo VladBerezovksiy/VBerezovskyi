@@ -7,14 +7,13 @@ module.exports = {
   },
 
   async grabLastOrderIfEqualsPrice(totalPrice) {
-    let price = (await I.grabTextFrom(this.lastPriceOrderText)).replace(
-      /[^0-9\.]+/g,
-      ""
+    let price = await I.parsePrice(
+      await I.grabTextFrom(this.lastPriceOrderText)
     );
     console.log("Check last order history price: " + price);
 
-    if (parseFloat(price) == totalPrice) {
-      return (await I.grabTextFrom(this.lastOrderId)).replace(/[^0-9\.]+/g, "");
+    if (price == totalPrice) {
+      return await I.parsePrice(await I.grabTextFrom(this.lastOrderId));
     }
   },
 };
