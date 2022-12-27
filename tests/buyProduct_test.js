@@ -15,12 +15,16 @@ let productOptions = FileReader.getProductsFromJson();
 
 Feature("buy");
 
-Before(async ({ I, homePage }) => {
+xBefore(async ({ I, homePage }) => {
   I.login(loginUser);
   await homePage.clearCart();
 });
 
-Scenario(
+Scenario("API", ({ I }) => {
+  I.sendGetRequest();
+});
+
+xScenario(
   "Buy product",
   async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
     for (let i = 0; i < 4; i++) {
