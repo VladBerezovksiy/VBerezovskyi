@@ -18,6 +18,7 @@
         "playwright": "^1.28.1"
     },
     "dependencies": {
-        "codeceptjs-chai": "^2.3.3"
+        "codeceptjs-chai": "^2.3.3",
+        "mochawesome": "^7.1.3"
     }
 }

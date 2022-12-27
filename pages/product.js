@@ -1,5 +1,6 @@
 const { I } = inject();
 const Helper = require("../helpers/helper.js");
+// const Helper1 = require("../helpers/converterCurrency");
 
 module.exports = {
   priceText: { xpath: '//div[@class="price"]/span' },

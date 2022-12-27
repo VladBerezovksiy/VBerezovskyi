@@ -15,22 +15,18 @@ let productOptions = FileReader.getProductsFromJson();
 
 Feature("buy");
 
-xBefore(async ({ I, homePage }) => {
+Before(async ({ I, homePage }) => {
   I.login(loginUser);
   await homePage.clearCart();
 });
 
-Scenario("API", ({ I }) => {
-  I.sendGetRequest();
-});
-
-xScenario(
+Scenario(
   "Buy product",
   async ({ I, productPage, checkoutPage, orderHistoryPage }) => {
     for (let i = 0; i < 4; i++) {
       I.amOnPage(productOptions["product"][i]["link"]);
 
-      let price = await productPage.getProductPrice();
+      let price = await I.changeUSDtoUAH(await productPage.getProductPrice());
       console.log("Product price: $" + price);
 
       let colorPrice = 0;

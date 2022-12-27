@@ -18,6 +18,18 @@ npx codeceptjs run --grep "Name tag"
 npx codeceptjs run --steps
 ```
 
+**Command to run all tests with report:**
+
+```
+npx codeceptjs run --reporter mochawesome
+```
+
+**Command to download all dependecies in project:**
+
+```
+npm i
+```
+
 **Command to create Page Object:**
 
 ```
@@ -80,7 +92,7 @@ npx codeceptjs gh
 4. Добавить в список ссылок Parrot toys (qatestlab.net), у которого нет опций. Успешно завершить тест с таким продуктом, используя конструкцию tryTo().
 5. Добавить в список ссылок Aquarium (qatestlab.net), который не доступен к покупке.
 
-### Task 05 =>
+### Task 05 => Done
 
 1. Вывести в консоль цену покупки в гривнах. Курс гривны получить используя REST API. Get запрос: https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json
    Установка: API Testing | CodeceptJS

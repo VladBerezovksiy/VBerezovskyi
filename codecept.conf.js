@@ -25,6 +25,16 @@ exports.config = {
     Converter: {
       require: "./helpers/converter_helper.js",
     },
+    ConverterСurrency: {
+      require: "./helpers/converterCurrency.js",
+    },
+    REST: {
+      defaultHeaders: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    },
+    JSONResponse: {},
   },
   plugins: {
     tryTo: {
@@ -39,6 +49,11 @@ exports.config = {
     checkoutPage: "./pages/checkout.js",
     orderHistoryPage: "./pages/orderHistory.js",
     helper: "./helpers/helper.js",
+  },
+  mocha: {
+    reporterOptions: {
+      reportDir: "output",
+    },
   },
   name: "VBerezovskyi",
 };
