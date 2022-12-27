@@ -7,10 +7,10 @@ module.exports = {
   },
 
   async grabLastOrderIfEqualsPrice(totalPrice) {
-    let price = await I.parsePrice(
-      await I.grabTextFrom(this.lastPriceOrderText)
+    let price = await I.changeUSDtoUAH(
+      await I.parsePrice(await I.grabTextFrom(this.lastPriceOrderText))
     );
-    console.log("Check last order history price: $" + price);
+    console.log("Check last order history price: " + price);
 
     if (price == totalPrice) {
       return await I.parsePrice(await I.grabTextFrom(this.lastOrderId));

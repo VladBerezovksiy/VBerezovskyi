@@ -25,7 +25,7 @@ exports.config = {
     Converter: {
       require: "./helpers/converter_helper.js",
     },
-    ConverterСurrency: {
+    ConverterCurrency: {
       require: "./helpers/converterCurrency.js",
     },
     REST: {

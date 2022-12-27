@@ -2,15 +2,13 @@ const Helper = require("@codeceptjs/helper");
 
 class ConverterСurrency extends Helper {
   async changeUSDtoUAH(price) {
-    let response = await this.sendGetRequest(
+    let response = await this.helpers["REST"].sendGetRequest(
       "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json"
     );
-    this.seeResponseCodeIs(200);
-    console.log(response.data[0].rate);
+    this.helpers["JSONResponse"].seeResponseCodeIs(200);
     let usdRate = response.data[0].rate;
     let converterInUAH = price * usdRate;
-    console.log("UAH: " + converterInUAH);
-    return converterInUAH;
+    return parseFloat(converterInUAH);
   }
 }
 

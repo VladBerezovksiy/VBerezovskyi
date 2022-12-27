@@ -9,7 +9,9 @@ module.exports = {
   checkoutButton: { xpath: "//div[@id='cart']//a[contains(.,'Checkout')]" },
 
   async getProductPrice() {
-    return await I.parsePrice(await I.grabTextFrom(this.priceText));
+    return await I.changeUSDtoUAH(
+      await I.parsePrice(await I.grabTextFrom(this.priceText))
+    );
   },
 
   async _checkOptionInProduct() {
@@ -19,7 +21,9 @@ module.exports = {
   async getColorProductPrice() {
     let colorText = await this._checkOptionInProduct();
     if (colorText) {
-      return await I.parsePrice(await I.grabTextFrom(this.dropdownElement));
+      return await I.changeUSDtoUAH(
+        await I.parsePrice(await I.grabTextFrom(this.dropdownElement))
+      );
     }
   },
 

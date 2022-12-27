@@ -8,12 +8,12 @@ type orderHistoryPage = typeof import('./pages/orderHistory.js');
 type helper = typeof import('./helpers/helper.js');
 type ChaiWrapper = import('codeceptjs-chai');
 type Converter = import('./helpers/converter_helper.js');
-type ConverterСurrency = import('./helpers/converterCurrency.js');
+type ConverterCurrency = import('./helpers/converterCurrency.js');
 
 declare namespace CodeceptJS {
   interface SupportObject { I: I, current: any, homePage: homePage, registerPage: registerPage, productPage: productPage, checkoutPage: checkoutPage, orderHistoryPage: orderHistoryPage, helper: helper }
-  interface Methods extends Playwright, ChaiWrapper, Converter, ConverterСurrency, REST, JSONResponse {}
-  interface I extends ReturnType<steps_file>, WithTranslation<ChaiWrapper>, WithTranslation<Converter>, WithTranslation<ConverterСurrency>, WithTranslation<JSONResponse> {}
+  interface Methods extends Playwright, ChaiWrapper, Converter, ConverterCurrency, REST, JSONResponse {}
+  interface I extends ReturnType<steps_file>, WithTranslation<ChaiWrapper>, WithTranslation<Converter>, WithTranslation<ConverterCurrency>, WithTranslation<JSONResponse> {}
   namespace Translation {
     interface Actions {}
   }
