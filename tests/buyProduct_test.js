@@ -27,7 +27,7 @@ Scenario(
       I.amOnPage(productOptions["product"][i]["link"]);
 
       let price = await productPage.getProductPrice();
-      console.log("Product price: $" + price);
+      console.log("Product price: " + price);
 
       let colorPrice = 0;
 
@@ -37,7 +37,7 @@ Scenario(
         );
 
         colorPrice = await productPage.getColorProductPrice();
-        console.log("Color Price: $" + colorPrice);
+        console.log("Color Price: " + colorPrice);
       }
 
       productPage.addProductToCheckout();
@@ -48,10 +48,10 @@ Scenario(
         checkoutPage.completeStepsFrom1to5(checkoutData);
 
         let deliveryPrice = await checkoutPage.getProductDeliveryPrice();
-        console.log("Delivery price: $" + deliveryPrice);
+        console.log("Delivery price: " + deliveryPrice);
 
         let totalPrice = await checkoutPage.getProductTotalPrice();
-        console.log("Total price: $" + totalPrice);
+        console.log("Total price: " + totalPrice);
 
         checkoutPage.finishSteps();
 

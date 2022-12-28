@@ -86,10 +86,14 @@ module.exports = {
   },
 
   async getProductDeliveryPrice() {
-    return await I.parsePrice(await I.grabTextFrom(this.deliveryPriceText));
+    return await I.changeUSDtoUAH(
+      await I.parsePrice(await I.grabTextFrom(this.deliveryPriceText))
+    );
   },
 
   async getProductTotalPrice() {
-    return await I.parsePrice(await I.grabTextFrom(this.totalPriceText));
+    return await I.changeUSDtoUAH(
+      await I.parsePrice(await I.grabTextFrom(this.totalPriceText))
+    );
   },
 };
