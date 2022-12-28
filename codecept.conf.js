@@ -25,9 +25,6 @@ exports.config = {
     Converter: {
       require: "./helpers/converter_helper.js",
     },
-    ConverterCurrency: {
-      require: "./helpers/converterCurrency.js",
-    },
     REST: {
       defaultHeaders: {
         "Content-Type": "application/json",
