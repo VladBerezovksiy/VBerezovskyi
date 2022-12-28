@@ -26,7 +26,7 @@ Scenario(
     for (let i = 0; i < 4; i++) {
       I.amOnPage(productOptions["product"][i]["link"]);
 
-      let price = await productPage.getProductPrice();
+      let price = await I.getUahPrice(productPage.priceText);
       console.log("Product price: " + price);
 
       let colorPrice = 0;

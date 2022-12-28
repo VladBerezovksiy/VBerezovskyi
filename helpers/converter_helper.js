@@ -4,16 +4,27 @@ const USD_URL =
   "https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json";
 
 class Converter extends Helper {
-  async _parsePrice(string) {
-    return parseFloat(string.replace(/[^0-9\.]+/g, ""));
-  }
+  // async _getTextFromLocator(locator) {
+  //   return await this.helpers["Playwright"].grabTextFrom(locator);
+  // }
 
-  async getUahPrice(price) {
-    let converterPrice = await this._parsePrice(price);
+  // async _parsePrice(string) {
+  //   string = await this._getTextFromLocator();
+  //   return parseFloat(string.replace(/[^0-9\.]+/g, ""));
+  // }
+
+  async getUahPrice(locator) {
+    let buff = await this.helpers["Playwright"].grabTextFrom(locator);
+    console.log(buff);
+    let price = parseFloat(buff.replace(/[^0-9\.]+/g, ""));
+    console.log(price);
     let response = await this.helpers["REST"].sendGetRequest(USD_URL);
     this.helpers["JSONResponse"].seeResponseCodeIs(200);
-    let usdRate = await this._parsePrice(response.data[0].rate);
-    let converterInUAH = converterPrice * usdRate;
+    let buff1 = response.data[0].rate;
+    console.log(buff1);
+    let usdRate = parseFloat(buff1.replace(/[^0-9\.]+/g, ""));
+    console.log(usdRate);
+    let converterInUAH = price * usdRate;
     return parseFloat(converterInUAH);
   }
 }

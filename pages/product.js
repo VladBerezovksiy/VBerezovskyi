@@ -8,9 +8,9 @@ module.exports = {
   cartButton: { css: "#cart" },
   checkoutButton: { xpath: "//div[@id='cart']//a[contains(.,'Checkout')]" },
 
-  async getProductPrice() {
-    return await I.getUahPrice(await I.grabTextFrom(this.priceText));
-  },
+  // async getProductPrice() {
+  //   return await I.grabTextFrom(this.priceText);
+  // },
 
   async _checkOptionInProduct() {
     return await Helper.checkElementIsVisible(this.dropdownElement);
